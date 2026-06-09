@@ -1,5 +1,6 @@
 from settings import * 
 from sprites import *
+import json
 
 
 class Game():
@@ -24,11 +25,15 @@ class Game():
         self.opponent = Opponent((self.all_sprites, self.paddle_sprites), self.ball)
         
         # Score
+        try:
+            with open(join('data', 'score.txt')) as score_file:
+                self.score = json.load(score_file)
+        except:
+            self.score = {
+                'player': 0,
+                'opponent': 0
+            }
         self.font = pygame.font.Font(None, 160)
-        self.score = {
-            'player': 0,
-            'opponent': 0
-        }
     
     def display_score(self):
         # Player Score
@@ -56,6 +61,8 @@ class Game():
             for event in self.game_events:
                 if event.type == pygame.QUIT:
                     self.running = False
+                    with open(join('data', 'score.txt'), 'w') as score_file:
+                        json.dump(self.score, score_file)
             
             # Updates
             self.all_sprites.update(dt)
