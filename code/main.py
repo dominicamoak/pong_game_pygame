@@ -1,5 +1,6 @@
 from settings import * 
 from sprites import *
+from groups import AllSprites
 import json
 
 
@@ -16,7 +17,7 @@ class Game():
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         
         # Groups
-        self.all_sprites = pygame.sprite.Group()
+        self.all_sprites = AllSprites()
         self.paddle_sprites = pygame.sprite.Group()
         
         # Sprites
@@ -34,6 +35,7 @@ class Game():
                 'opponent': 0
             }
         self.font = pygame.font.Font(None, 160)
+        self.label_font = pygame.font.Font(None, 80)
     
     def display_score(self):
         # Player Score
@@ -51,6 +53,17 @@ class Game():
     
     def update_score(self, side):
         self.score['player' if side == 'player' else 'opponent'] += 1
+    
+    def side_label(self):
+        # Opponent Label
+        opponent_label_surf = self.label_font.render('OPPONENT', True, COLORS['bg detail'])
+        opponent_label_rect = opponent_label_surf.get_frect(center = ((WINDOW_WIDTH / 2) / 2, 50))
+        self.display_surface.blit(opponent_label_surf, opponent_label_rect)
+        
+        # Player label
+        player_label_surf = self.label_font.render('PLAYER', True, COLORS['bg detail'])
+        player_label_rect = player_label_surf.get_frect(center = ((WINDOW_WIDTH / 2) + ((WINDOW_WIDTH / 2) / 2), 50))
+        self.display_surface.blit(player_label_surf, player_label_rect)
     
     def run(self):
         while self.running:
@@ -70,7 +83,8 @@ class Game():
             # Draw Game
             self.display_surface.fill(COLORS['bg'])
             self.display_score()
-            self.all_sprites.draw(self.display_surface)
+            self.side_label()
+            self.all_sprites.draw()
             pygame.display.update()
         
         pygame.quit()

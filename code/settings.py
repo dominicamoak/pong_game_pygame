@@ -7,9 +7,9 @@ POS = {'player': (WINDOW_WIDTH - 50, WINDOW_HEIGHT / 2), 'opponent': (50, WINDOW
 SPEED = {'player': 500, 'opponent': 250, 'ball': 450}
 COLORS = {
     'paddle': '#ee322c',
-    'paddle shadow': '#b12521',
+    'paddle shadow': '#47150e',
     'ball': '#ee622c',
-    'ball shadow': '#c14f24',
+    'ball shadow': '#6e2513',
     'bg': '#002633',
     'bg detail': '#004a63'
 }
