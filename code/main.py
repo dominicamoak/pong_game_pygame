@@ -21,6 +21,7 @@ class Game():
         # Sprites
         self.player = Player((self.all_sprites, self.paddle_sprites))
         self.ball = Ball(self.all_sprites, self.paddle_sprites)
+        self.opponent = Opponent((self.all_sprites, self.paddle_sprites), self.ball)
     
     def update(self):
         pass
