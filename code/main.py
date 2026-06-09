@@ -1,5 +1,5 @@
 from settings import * 
-from player import *
+from sprites import *
 
 
 class Game():
@@ -16,23 +16,27 @@ class Game():
         
         # Groups
         self.all_sprites = pygame.sprite.Group()
+        self.paddle_sprites = pygame.sprite.Group()
         
         # Sprites
-        self.player = Player(self.all_sprites, (POS['player'][0], POS['player'][1]))
+        self.player = Player((self.all_sprites, self.paddle_sprites))
+        self.ball = Ball(self.all_sprites, self.paddle_sprites)
     
     def update(self):
         pass
     
     def run(self):
-        self.game_events = pygame.event.get()
-        
         while self.running:
+            self.game_events = pygame.event.get()
             dt = self.clock.tick() / 1000
             
             # Event Loop
             for event in self.game_events:
                 if event.type == pygame.QUIT:
                     self.running = False
+            
+            # Updates
+            self.all_sprites.update(dt)
             
             # Draw Game
             self.display_surface.fill(COLORS['bg'])
